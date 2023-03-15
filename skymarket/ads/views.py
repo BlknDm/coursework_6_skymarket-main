@@ -31,6 +31,10 @@ class AdViewSet(viewsets.ModelViewSet):
             self.permission_classes = [permissions.IsAdminUser]
         return super().get_permissions()
 
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(author=user)
+
     def get_serializer_class(self):
         if self.action == 'retrieve':
             return AdDetailSerializer
